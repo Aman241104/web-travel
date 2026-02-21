@@ -7,6 +7,8 @@ import { Navbar } from "@/components/navigation/navbar";
 import { FloatingConcierge } from "@/components/ui/floating-concierge";
 import { IntentSelectorModal } from "@/components/ui/intent-selector-modal";
 import { ResumePlanningToast } from "@/components/ui/resume-planning-toast";
+import { Footer } from "@/components/navigation/footer";
+import { FloatingMobileNav } from "@/components/navigation/floating-mobile-nav";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,7 +39,7 @@ export default function RootLayout({
           <GSAPProvider>
             <Navbar />
 
-            <main className="flex min-h-screen flex-col pt-20">
+            <main className="flex min-h-screen flex-col">
               {children}
             </main>
 
@@ -50,7 +52,8 @@ export default function RootLayout({
             {/* Post-Visit Reactivation Nudge */}
             <ResumePlanningToast />
 
-            {/* Footer Placeholder */}
+            <FloatingMobileNav />
+            <Footer />
           </GSAPProvider>
         </LenisProvider>
       </body>

@@ -23,7 +23,7 @@ export function FinalCTA() {
             <Container>
                 <div
                     ref={containerRef}
-                    className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto space-y-10"
+                    className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto space-y-12 md:space-y-16 py-8"
                 >
                     <div className="space-y-4">
                         <h2 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-tight drop-shadow-lg">

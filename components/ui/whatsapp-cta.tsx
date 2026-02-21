@@ -18,6 +18,7 @@ interface WhatsAppCTAProps extends ButtonProps {
     message?: string;
     isFloating?: boolean;
     intentCategory?: IntentCategory;
+    hideDefaultIcon?: boolean;
 }
 
 export const WhatsAppCTA = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, WhatsAppCTAProps>(
@@ -27,6 +28,7 @@ export const WhatsAppCTA = React.forwardRef<HTMLButtonElement | HTMLAnchorElemen
             message = "Hello! I am interested in planning a trip.",
             isFloating = false,
             intentCategory = "direct",
+            hideDefaultIcon = false,
             className,
             children,
             variant = "premium",
@@ -89,7 +91,7 @@ export const WhatsAppCTA = React.forwardRef<HTMLButtonElement | HTMLAnchorElemen
                     onClick={handleClick}
                     {...props}
                 >
-                    <MessageCircle size={18} />
+                    {!hideDefaultIcon && <MessageCircle size={18} />}
                     {children || "Chat on WhatsApp"}
                 </Button>
             );
@@ -103,8 +105,8 @@ export const WhatsAppCTA = React.forwardRef<HTMLButtonElement | HTMLAnchorElemen
                 className={cn("gap-2", className)}
                 {...props}
             >
-                <a ref={ref as React.Ref<HTMLAnchorElement>} href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle size={18} />
+                <a ref={ref as React.Ref<HTMLAnchorElement>} href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    {!hideDefaultIcon && <MessageCircle size={18} />}
                     {children || "Chat on WhatsApp"}
                 </a>
             </Button>

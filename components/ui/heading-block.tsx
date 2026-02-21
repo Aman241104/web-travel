@@ -2,10 +2,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 interface HeadingBlockProps extends React.HTMLAttributes<HTMLDivElement> {
-    title: string;
-    subtitle?: string;
+    title: string | React.ReactNode;
+    subtitle?: string | React.ReactNode;
     alignment?: "left" | "center" | "right";
-    size?: "default" | "large" | "hero";
+    size?: "default" | "large" | "hero" | "editorial";
 }
 
 const HeadingBlock = React.forwardRef<HTMLDivElement, HeadingBlockProps>(
@@ -26,11 +26,12 @@ const HeadingBlock = React.forwardRef<HTMLDivElement, HeadingBlockProps>(
             >
                 <h2
                     className={cn(
-                        "font-display font-semibold tracking-tight text-brand-text",
+                        "font-display tracking-tight text-brand-text",
                         {
-                            "text-3xl md:text-4xl lg:text-5xl": size === "default",
-                            "text-4xl md:text-5xl lg:text-6xl": size === "large",
-                            "text-5xl md:text-7xl lg:text-8xl": size === "hero",
+                            "font-semibold text-3xl md:text-4xl lg:text-5xl": size === "default",
+                            "font-semibold text-4xl md:text-5xl lg:text-6xl": size === "large",
+                            "font-bold text-5xl md:text-7xl lg:text-8xl": size === "hero",
+                            "font-bold text-5xl md:text-6xl lg:text-7xl tracking-tighter leading-[1.05]": size === "editorial",
                         }
                     )}
                 >
@@ -39,10 +40,11 @@ const HeadingBlock = React.forwardRef<HTMLDivElement, HeadingBlockProps>(
                 {subtitle && (
                     <p
                         className={cn(
-                            "text-brand-text/70 max-w-2xl font-sans",
+                            "text-brand-text-muted max-w-2xl font-sans",
                             {
-                                "text-base md:text-lg": size === "default",
-                                "text-lg md:text-xl": size === "large" || size === "hero",
+                                "text-base md:text-lg font-light leading-relaxed": size === "default",
+                                "text-lg md:text-xl font-light leading-relaxed": size === "large" || size === "hero",
+                                "text-lg md:text-xl font-light leading-relaxed tracking-wide": size === "editorial",
                             }
                         )}
                     >

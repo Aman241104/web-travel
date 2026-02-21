@@ -10,8 +10,12 @@ export default function ServicesPage() {
     return (
         <main className="w-full bg-brand-bg relative pb-32">
 
-            {/* Minimalist, Authority Hero */}
-            <SectionWrapper spacing="hero" background="alt" className="pt-40 pb-24 border-b border-brand-text/5">
+            {/* Minimalist, Authority Hero with subtle ambient background */}
+            <SectionWrapper spacing="hero" background="alt" className="pt-40 pb-24 border-b border-brand-text/5 relative overflow-hidden">
+                {/* Ambient glow & dot grid for technical feel */}
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, black 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-blue/5 rounded-[100%] blur-[100px] pointer-events-none" />
+
                 <Container className="max-w-4xl max-auto text-center flex flex-col items-center">
                     <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-brand-text mb-6">
                         Execution. Not just planning.
@@ -22,10 +26,10 @@ export default function ServicesPage() {
                 </Container>
             </SectionWrapper>
 
-            {/* The Capabilities Engine */}
+            {/* The Capabilities Engine (Bento Grid) */}
             <SectionWrapper background="default" spacing="default" className="pt-20">
                 <Container>
-                    <div className="flex flex-col gap-8 md:gap-12 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-[1400px] mx-auto auto-rows-min">
 
                         <CapabilityBlock
                             index={1}
@@ -36,6 +40,7 @@ export default function ServicesPage() {
                             reassurance="End-to-end synchronization for zero-friction transit."
                             ctaIntent="general"
                             ctaMessage="Hi Heena, I need complex end-to-end logistics handled for my upcoming trip."
+                            className="md:col-span-2 lg:col-span-2"
                         />
 
                         <CapabilityBlock
@@ -47,6 +52,7 @@ export default function ServicesPage() {
                             proofSignal="High success rates for complex Schengen and US visas."
                             ctaIntent="visa-inquiry"
                             ctaMessage="Hello! I have a quick question regarding Schengen/International visa processes."
+                            className="lg:col-span-1"
                         />
 
                         <CapabilityBlock
@@ -58,6 +64,7 @@ export default function ServicesPage() {
                             reassurance="Transparent financial management before you board."
                             ctaIntent="general"
                             ctaMessage="Hi team, I need forex guidance for my upcoming international travel."
+                            className="lg:col-span-1"
                         />
 
                         <CapabilityBlock
@@ -69,6 +76,7 @@ export default function ServicesPage() {
                             proofSignal="Managed 100-member complex domestic tour without an on-site manager."
                             ctaIntent="corporate"
                             ctaMessage="Hello, I'm inquiring on behalf of my company regarding corporate group travel and mass logistics."
+                            className="md:col-span-1 lg:col-span-2"
                         />
 
                         <CapabilityBlock
@@ -80,6 +88,7 @@ export default function ServicesPage() {
                             reassurance="Never compromise your beliefs or comfort abroad."
                             ctaIntent="kitchen-caravan"
                             ctaMessage="Hi team, I'm interested in a Kitchen Caravan tour with specific dietary requirements for our group."
+                            className="md:col-span-2 lg:col-span-2 bg-brand-blue-light/30 border-brand-accent/20"
                         />
 
                         <CapabilityBlock
@@ -91,6 +100,7 @@ export default function ServicesPage() {
                             proofSignal="Re-routed 70 cancelled passengers to 3 new flights inside 7 hours."
                             ctaIntent="general"
                             ctaMessage="Hi Heena, I need an expert planner who handles logistics and unexpected crises. Can we chat?"
+                            className="lg:col-span-1"
                         />
 
                     </div>

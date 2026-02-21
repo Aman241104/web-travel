@@ -5,96 +5,88 @@ import { useStagger } from "@/lib/animations/use-stagger";
 import { Container } from "@/components/ui/container";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { HeadingBlock } from "@/components/ui/heading-block";
-import { MessageCircle, FileText, PlaneTakeoff, HeartHandshake } from "lucide-react";
-
-const STEPS = [
-    {
-        id: "01",
-        title: "Say Hello",
-        description: "Tap WhatsApp and tell us your dream destination. No forms required—just start a conversation with Heena or our planners.",
-        icon: <MessageCircle className="w-8 h-8 text-brand-bg relative z-10" />,
-        color: "bg-[#25D366]" // WhatsApp Green
-    },
-    {
-        id: "02",
-        title: "We Curate",
-        description: "Our experts piece together your itinerary. Flights, tricky visas, hand-picked stays, and local forex—we negotiate and organize the details for you.",
-        icon: <FileText className="w-8 h-8 text-brand-bg relative z-10" />,
-        color: "bg-brand-text"
-    },
-    {
-        id: "03",
-        title: "Approve & Pack",
-        description: "Review a transparent quote. Once approved, we handle everything else. You just pack.",
-        icon: <PlaneTakeoff className="w-8 h-8 text-brand-bg relative z-10" />,
-        color: "bg-brand-text"
-    },
-    {
-        id: "04",
-        title: "24/7 Support",
-        description: "Flight delayed? Need a restaurant reservation? From takeoff to return, your dedicated expert is just a WhatsApp message away.",
-        icon: <HeartHandshake className="w-8 h-8 text-brand-bg relative z-10" />,
-        color: "bg-brand-accent"
-    }
-];
+import { MessageCircle, Map, PlaneTakeoff, ShieldCheck } from "lucide-react";
 
 export function HowItWorks() {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // Stagger reveal the process steps
     useStagger({
         containerRef,
-        selector: ".process-step",
-        staggerTime: 0.2,
+        selector: ".process-card",
+        staggerTime: 0.15,
         yOffset: 30,
     });
 
+    const STEPS = [
+        {
+            title: "Say Hello",
+            description: "No forms required. Start a conversation directly with our planners via WhatsApp.",
+            icon: <MessageCircle className="w-8 h-8 text-brand-blue" />,
+            badge: "01",
+            bgClass: "bg-brand-blue/5"
+        },
+        {
+            title: "We Curate",
+            description: "We handle the friction: flights, tricky visas, hand-picked stays, and local forex.",
+            icon: <Map className="w-8 h-8 text-brand-blue" />,
+            badge: "02",
+            bgClass: "bg-brand-blue/5"
+        },
+        {
+            title: "Approve & Pack",
+            description: "Review your transparent quote. Once approved, we book everything. You just pack.",
+            icon: <PlaneTakeoff className="w-8 h-8 text-brand-blue" />,
+            badge: "03",
+            bgClass: "bg-brand-blue/5"
+        },
+        {
+            title: "24/7 Support",
+            description: "From takeoff to return, your dedicated expert is just a message away the entire time.",
+            icon: <ShieldCheck className="w-8 h-8 text-white" />,
+            badge: "04",
+            bgClass: "bg-brand-accent shadow-[0_0_20px_rgba(0,82,255,0.4)] shadow-brand-accent/40"
+        }
+    ];
+
     return (
-        <SectionWrapper background="default">
-            <Container className="max-w-6xl" ref={containerRef}>
-                <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+        <SectionWrapper background="alt" className="relative pb-24 md:pb-32 overflow-hidden z-10 -mt-10 pt-20 rounded-t-[3rem]">
+            <Container ref={containerRef}>
+                <div className="flex flex-col items-center text-center mb-16 md:mb-20 px-4">
+                    <HeadingBlock
+                        title="Effortless Planning"
+                        subtitle="We've removed the friction. No endless forms, no hidden fees. Just direct access to human experts who care about your journey."
+                        alignment="center"
+                    />
+                </div>
 
-                    <div className="lg:w-1/3 sticky top-32">
-                        <HeadingBlock
-                            title="How We Work"
-                            subtitle="We've removed the friction. No endless forms, no hidden fees, and no automated call centers. Just direct access to human experts who care."
-                        />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 px-4">
+                    {STEPS.map((step, idx) => (
+                        <div
+                            key={idx}
+                            className="process-card group relative bg-white rounded-[2rem] p-8 md:p-10 border border-brand-text/5 flex flex-col items-start gap-12 hover:-translate-y-2 transition-transform duration-500 shadow-sm hover:shadow-[0_20px_40px_rgba(10,37,64,0.06)] overflow-hidden"
+                        >
+                            {/* Abstract decorative shape */}
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-text/[0.02] rounded-full blur-2xl -translate-y-1/2 translate-x-1/3 group-hover:bg-brand-accent/5 transition-colors duration-500 pointer-events-none" />
 
-
-                    <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative">
-
-                        {/* Visual connector line for desktop */}
-                        <div className="hidden md:block absolute top-[60px] left-12 right-12 h-px bg-brand-text/10" />
-
-                        {STEPS.map((step, idx) => (
-                            <div
-                                key={step.id}
-                                className="process-step flex flex-col items-start gap-4 relative w-full"
-                            >
-                                <div className="flex items-end gap-5 mb-2">
-                                    <div className={`h-16 w-16 rounded-full flex items-center justify-center shrink-0 ${step.color} shadow-lg relative z-10`}>
-                                        {/* Pulsing ring effect on hover */}
-                                        <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-current transition-opacity group-hover:opacity-40" />
-                                        {step.icon}
-                                    </div>
-                                    <span className="font-display font-medium text-brand-text/15 text-6xl md:text-7xl tabular-nums tracking-tighter leading-[0.8] relative top-2">
-                                        {step.id}
-                                    </span>
+                            <div className="flex w-full justify-between items-start relative z-10">
+                                <div className={`w-16 h-16 rounded-[1.25rem] flex items-center justify-center ${step.bgClass} group-hover:scale-110 transition-transform duration-500 shrink-0`}>
+                                    {step.icon}
                                 </div>
-
-                                <div className="max-w-xs mt-2">
-                                    <h3 className="font-display text-2xl font-semibold text-brand-text mb-2 tracking-tight">
-                                        {step.title}
-                                    </h3>
-                                    <p className="font-sans text-brand-text/80 leading-relaxed text-base">
-                                        {step.description}
-                                    </p>
-                                </div>
+                                <span className="text-3xl font-display font-light text-brand-text/20 leading-none mt-2">
+                                    {step.badge}
+                                </span>
                             </div>
-                        ))}
-                    </div>
 
+                            <div className="relative z-10 mt-auto">
+                                <h3 className="font-display text-2xl font-semibold text-brand-text mb-3 tracking-tight">
+                                    {step.title}
+                                </h3>
+                                <p className="font-sans text-brand-text-muted text-base leading-relaxed font-light">
+                                    {step.description}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </Container>
         </SectionWrapper>

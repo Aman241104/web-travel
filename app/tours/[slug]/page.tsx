@@ -8,6 +8,132 @@ import { TourPricing } from '@/components/tours/tour-pricing';
 
 // Dummy Database
 const TOURS_DB: Record<string, any> = {
+    "the-swiss-alps": {
+        destination: "Switzerland",
+        title: "Panoramic glaciers & luxury trains",
+        image: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=2940&auto=format&fit=crop",
+        duration: "8 Days, 7 Nights",
+        bestTime: "June - September",
+        cities: ["Zurich", "Zermatt", "St. Moritz"],
+
+        snapshot: {
+            flightsIncluded: false,
+            visaType: "Schengen Visa",
+            groupType: "Couples & Small Groups",
+            idealFor: "Scenic Views & Luxury",
+            kitchenCaravan: false,
+        },
+
+        narrativeBeats: [
+            {
+                dayLabel: "Day 1-2 • Arrival in Zurich",
+                title: "Lakeside Elegance",
+                description: "Touch down in Zurich and transfer to a luxury lakeside suite. Enjoy private city tours and exclusive culinary experiences.",
+                image: "https://images.unsplash.com/photo-1515438740203-7cbcecfbaf33?q=80&w=2800&auto=format&fit=crop"
+            },
+            {
+                dayLabel: "Day 3-5 • The Glacier Express",
+                title: "Panoramic Marvels",
+                description: "Board the legendary Glacier Express in Excellence Class. Ascend to Zermatt and view the Matterhorn directly from your private balcony.",
+                image: "https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?q=80&w=2940&auto=format&fit=crop"
+            },
+            {
+                dayLabel: "Day 6-8 • St. Moritz Retreat",
+                title: "Alpine Luxury",
+                description: "Conclude your journey in opulent St. Moritz. Indulge in elite spa treatments and private mountain dining before your transfer out.",
+                image: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=2940&auto=format&fit=crop"
+            }
+        ],
+
+        pricing: {
+            startingFrom: "₹1,85,000",
+            note: "Per person on a twin-sharing basis. Pricing is dependent on train class availability and choice of alpine lodge."
+        }
+    },
+    "bali-immersive": {
+        destination: "Bali (Indonesia)",
+        title: "Culture, jungles & coastlines",
+        image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2838&auto=format&fit=crop",
+        duration: "7 Days, 6 Nights",
+        bestTime: "April - October",
+        cities: ["Ubud", "Seminyak", "Uluwatu"],
+
+        snapshot: {
+            flightsIncluded: false,
+            visaType: "Visa on Arrival",
+            groupType: "Couples & Families",
+            idealFor: "Culture & Relaxation",
+            kitchenCaravan: true,
+        },
+
+        narrativeBeats: [
+            {
+                dayLabel: "Day 1-2 • The Arrival",
+                title: "Jungle Immersion in Ubud",
+                description: "Bypass the airport traffic with a private VIP transfer to a secluded jungle villa in Ubud equipped with your own infinity pool.",
+                image: "https://images.unsplash.com/photo-1518548419970-58e3b4a20bca?q=80&w=2838&auto=format&fit=crop"
+            },
+            {
+                dayLabel: "Day 3-4 • The Highlight",
+                title: "Cultural Heartbeat",
+                description: "Embark on private guided tours through ancient water temples and artisan villages, followed by a chef-curated romantic dinner overlooking the valley.",
+                image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2838&auto=format&fit=crop"
+            },
+            {
+                dayLabel: "Day 5-7 • The Deep Reset",
+                title: "Clifftop Coastline",
+                description: "Transfer to a luxury resort in Uluwatu. Spend the remaining days at premium beach clubs and watching the iconic cliffside sunsets.",
+                image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2838&auto=format&fit=crop"
+            }
+        ],
+
+        pricing: {
+            startingFrom: "₹65,000",
+            note: "Per person pricing. Heavily dependent on the specific luxury villas chosen and whether private drivers are hired full-time."
+        }
+    },
+    "dubai-and-abu-dhabi": {
+        destination: "United Arab Emirates",
+        title: "Architectural marvels & desert safaris",
+        image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2940&auto=format&fit=crop",
+        duration: "6 Days, 5 Nights",
+        bestTime: "November - March",
+        cities: ["Dubai", "Abu Dhabi"],
+
+        snapshot: {
+            flightsIncluded: false,
+            visaType: "E-Visa required",
+            groupType: "Families & Couples",
+            idealFor: "Luxury Shopping & Sightseeing",
+            kitchenCaravan: true,
+        },
+
+        narrativeBeats: [
+            {
+                dayLabel: "Day 1-2 • The Arrival",
+                title: "Dubai Skyline",
+                description: "Arrive via a luxury chauffeur directly to your five-star suite downtown. Enjoy VIP skip-the-line access at the Burj Khalifa and premium dining.",
+                image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2940&auto=format&fit=crop"
+            },
+            {
+                dayLabel: "Day 3-4 • The Highlight",
+                title: "Exclusive Desert Safari",
+                description: "Leave the city behind for a premium dune bashing experience in luxury SUVs, concluding with a private Bedouin-style dinner deep in the desert.",
+                image: "https://images.unsplash.com/photo-1546255395-9ff2dcee8632?q=80&w=2940&auto=format&fit=crop"
+            },
+            {
+                dayLabel: "Day 5-6 • The Deep Reset",
+                title: "Abu Dhabi Majesty",
+                description: "A private transfer whisks you to Abu Dhabi for guided tours of the Grand Mosque and the Louvre, staying in unparalleled palatial luxury.",
+                image: "https://images.unsplash.com/photo-1512632578888-169bbbc64f33?q=80&w=2940&auto=format&fit=crop"
+            }
+        ],
+
+        pricing: {
+            startingFrom: "₹55,000",
+            note: "Per person. Pricing varies heavily based on the season (especially around global festivals) and standard vs premium desert camp tiers."
+        }
+    },
     "majestic-turkey": {
         destination: "Turkey",
         title: "Where Two Continents Collide in Perfect Harmony",
