@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@/components/ui/container";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { HeadingBlock } from "@/components/ui/heading-block";
@@ -65,11 +67,78 @@ const EXPERIENCES: SignatureExperienceData[] = [
 
 export default function SignatureToursPage() {
     const [activeCategory, setActiveCategory] = useState("all");
+    const gridRef = useRef<HTMLDivElement>(null);
+    const trustBlocksRef = useRef<HTMLDivElement>(null);
+
+    // Initial GSAP registration
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+    }, []);
+
+    // Sync state with Navbar CustomEvent
+    useEffect(() => {
+        const handleCategoryChange = (e: any) => {
+            if (e.detail) setActiveCategory(e.detail);
+        };
+        window.addEventListener('categoryChange', handleCategoryChange);
+        return () => window.removeEventListener('categoryChange', handleCategoryChange);
+    }, []);
 
     // Filter logic
     const filteredExperiences = activeCategory === "all"
         ? EXPERIENCES
         : EXPERIENCES.filter(exp => exp.category === activeCategory);
+
+    // GSAP Grid Stagger Animation
+    useEffect(() => {
+        if (!gridRef.current) return;
+
+        const ctx = gsap.context(() => {
+            const cards = gsap.utils.toArray<HTMLElement>('.tour-card-wrapper');
+            gsap.set(cards, { opacity: 0, y: 50 });
+
+            ScrollTrigger.batch(cards, {
+                onEnter: (elements) => {
+                    gsap.to(elements, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.2,
+                        stagger: 0.15,
+                        ease: "power3.out",
+                        overwrite: "auto" // Pre-empts conflicts to ensure smooth updates
+                    });
+                },
+                once: true // Ensure it only animates in once
+            });
+        }, gridRef);
+
+        return () => ctx.revert();
+    }, [filteredExperiences]); // Re-run when filter changes
+
+    // GSAP Trust Blocks Animation
+    useEffect(() => {
+        if (!trustBlocksRef.current) return;
+
+        const ctx = gsap.context(() => {
+            const blocks = gsap.utils.toArray<HTMLElement>('.trust-block');
+            gsap.fromTo(blocks,
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: trustBlocksRef.current,
+                        start: "top 85%",
+                    }
+                }
+            );
+        }, trustBlocksRef);
+
+        return () => ctx.revert();
+    }, []);
 
     return (
         <main className="w-full bg-brand-bg relative pb-32">
@@ -99,11 +168,11 @@ export default function SignatureToursPage() {
             <TourCategories onSelect={setActiveCategory} />
 
             {/* The Aspirational Grid */}
-            <SectionWrapper background="default" spacing="default" className="pt-16 md:pt-24 z-10 relative">
+            <SectionWrapper background="default" spacing="default" className="pt-24 md:pt-24 z-10 relative">
                 <Container>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                    <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                         {filteredExperiences.map((exp, idx) => (
-                            <div key={exp.id} className={idx % 2 !== 0 ? "md:mt-24" : ""}>
+                            <div key={exp.id} className={`tour-card-wrapper ${idx % 2 !== 0 ? "md:mt-24" : ""}`}>
                                 <SignatureExperienceCard data={exp} />
                             </div>
                         ))}
@@ -123,31 +192,34 @@ export default function SignatureToursPage() {
             </SectionWrapper>
 
             {/* Mid-Page Authority Injection */}
-            <SectionWrapper background="alt" spacing="default" className="border-y border-brand-text/5 mt-16 md:mt-32">
-                <Container className="max-w-5xl">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-                        <div className="flex flex-col items-center md:items-start group">
-                            <div className="h-14 w-14 rounded-full bg-brand-bg flex items-center justify-center text-brand-blue mb-6 border border-brand-text/10 shadow-sm group-hover:scale-110 transition-transform">
-                                <ShieldCheck />
+            <SectionWrapper background="alt" spacing="default" className="border-t border-brand-text/5 mt-16 md:mt-32 pb-32">
+                <Container className="max-w-6xl">
+                    <div ref={trustBlocksRef} className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 relative">
+                        {/* Beautiful background accent */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[150%] bg-gradient-to-b from-brand-accent/5 via-brand-accent/5 to-transparent blur-3xl -z-10 rounded-full" />
+
+                        <div className="trust-block flex flex-col items-center md:items-start group p-8 md:p-10 bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 border border-brand-text/5">
+                            <div className="h-16 w-16 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-blue mb-8 border border-brand-text/10 shadow-inner group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                                <ShieldCheck className="w-8 h-8" strokeWidth={1.5} />
                             </div>
-                            <h4 className="font-display font-semibold text-xl mb-3">The Bureaucracy Shield</h4>
-                            <p className="text-brand-text-muted text-sm leading-relaxed">Visas, complex global forex, and travel insurance. We handle the friction so you never have to.</p>
+                            <h4 className="font-display font-semibold text-2xl mb-4 text-brand-text">The Bureaucracy Shield</h4>
+                            <p className="text-brand-text-muted text-base leading-relaxed font-light">Visas, complex global forex, and travel insurance. We handle the friction so you never have to.</p>
                         </div>
 
-                        <div className="flex flex-col items-center md:items-start group">
-                            <div className="h-14 w-14 rounded-full bg-brand-bg flex items-center justify-center text-brand-blue mb-6 border border-brand-text/10 shadow-sm group-hover:scale-110 transition-transform">
-                                <Briefcase />
+                        <div className="trust-block flex flex-col items-center md:items-start group p-8 md:p-10 bg-brand-blue rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgb(0,82,255,0.2)] transition-all duration-500 transform md:-translate-y-4">
+                            <div className="h-16 w-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-white mb-8 border border-white/20 shadow-inner group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                                <Briefcase className="w-8 h-8" strokeWidth={1.5} />
                             </div>
-                            <h4 className="font-display font-semibold text-xl mb-3">The Group Advantage</h4>
-                            <p className="text-brand-text-muted text-sm leading-relaxed">From 50-person corporate retreats to massive family reunions, our logistical scaling is flawless.</p>
+                            <h4 className="font-display font-semibold text-2xl mb-4 text-white">The Group Advantage</h4>
+                            <p className="text-white/80 text-base leading-relaxed font-light">From 50-person corporate retreats to massive family reunions, our logistical scaling is flawless.</p>
                         </div>
 
-                        <div className="flex flex-col items-center md:items-start group">
-                            <div className="h-14 w-14 rounded-full bg-brand-bg flex items-center justify-center text-brand-blue mb-6 border border-brand-text/10 shadow-sm group-hover:scale-110 transition-transform">
-                                <HeartHandshake />
+                        <div className="trust-block flex flex-col items-center md:items-start group p-8 md:p-10 bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 border border-brand-text/5">
+                            <div className="h-16 w-16 rounded-2xl bg-brand-bg flex items-center justify-center text-brand-blue mb-8 border border-brand-text/10 shadow-inner group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                                <HeartHandshake className="w-8 h-8" strokeWidth={1.5} />
                             </div>
-                            <h4 className="font-display font-semibold text-xl mb-3">The Kitchen Caravan</h4>
-                            <p className="text-brand-text-muted text-sm leading-relaxed">Strict dietary requirements? We can bring the kitchen—and the chef—providing specialized catering for the Jain and Swaminarayan communities across the globe.</p>
+                            <h4 className="font-display font-semibold text-2xl mb-4 text-brand-text">The Kitchen Caravan</h4>
+                            <p className="text-brand-text-muted text-base leading-relaxed font-light">Strict dietary requirements? We can bring the kitchen—and the chef—providing specialized catering for the Jain and Swaminarayan communities across the globe.</p>
                         </div>
                     </div>
                 </Container>

@@ -25,27 +25,44 @@ export function TourCategories({ onSelect }: { onSelect: (id: string) => void })
         );
     }, []);
 
+    useEffect(() => {
+        const handleCategoryChange = (e: any) => {
+            if (e.detail) setActiveId(e.detail);
+        };
+        window.addEventListener('categoryChange', handleCategoryChange);
+        return () => window.removeEventListener('categoryChange', handleCategoryChange);
+    }, []);
+
     const handleSelect = (id: string) => {
         setActiveId(id);
         onSelect(id);
+        window.dispatchEvent(new CustomEvent('categoryChange', { detail: id }));
     };
 
     return (
-        <div ref={navRef} className="w-full border-b border-brand-text/10 bg-brand-bg sticky top-[72px] z-40">
+        <div ref={navRef} className="w-full md:hidden pb-4 bg-white/70 backdrop-blur-xl sticky top-0 z-40 border-b border-brand-text/5 transition-all duration-500">
             <Container>
-                <div className="flex overflow-x-auto no-scrollbar py-4 gap-8">
+                <div className="flex overflow-x-auto no-scrollbar py-4 gap-8 md:gap-12 items-center justify-start md:justify-center">
                     {CATEGORIES.map((cat) => (
                         <button
                             key={cat.id}
                             onClick={() => handleSelect(cat.id)}
-                            className={cn(
-                                "whitespace-nowrap font-sans text-sm md:text-base tracking-wide transition-all duration-300 pb-1 border-b-2",
-                                activeId === cat.id
-                                    ? "text-brand-blue font-medium border-brand-accent/50"
-                                    : "text-brand-text-muted hover:text-brand-blue border-transparent"
-                            )}
+                            className="relative whitespace-nowrap group focus:outline-none flex flex-col items-center py-2"
                         >
-                            {cat.label}
+                            <span className={cn(
+                                "text-[10px] md:text-xs uppercase tracking-[0.15em] transition-colors duration-300 font-medium",
+                                activeId === cat.id
+                                    ? "text-brand-blue"
+                                    : "text-brand-text/50 group-hover:text-brand-text/80"
+                            )}>
+                                {cat.label}
+                            </span>
+
+                            {/* Animated Active Indicator */}
+                            <span className={cn(
+                                "absolute -bottom-1 h-[2px] bg-brand-accent transition-all duration-500 ease-out",
+                                activeId === cat.id ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-1/2 group-hover:opacity-50"
+                            )} />
                         </button>
                     ))}
                 </div>

@@ -9,12 +9,22 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+const CATEGORIES = [
+    { id: "all", label: "All Experiences" },
+    { id: "honeymoon", label: "Honeymoon & Couples" },
+    { id: "corporate", label: "Corporate Retreats" },
+    { id: "kitchen-caravan", label: "Kitchen Caravan Tours" },
+    { id: "family", label: "Family Holidays" },
+];
+
 export function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const navContainerRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const isHome = pathname === "/";
+    const isSignatureTours = pathname === "/signature-tours";
+    const [activeCategoryId, setActiveCategoryId] = useState("all");
 
     React.useEffect(() => {
         const onScroll = () => {
@@ -28,6 +38,19 @@ export function Navbar() {
         onScroll(); // Fire initially
         return () => window.removeEventListener("scroll", onScroll);
     }, [isScrolled]);
+
+    React.useEffect(() => {
+        const handleCategoryChange = (e: any) => {
+            if (e.detail) setActiveCategoryId(e.detail);
+        };
+        window.addEventListener('categoryChange', handleCategoryChange);
+        return () => window.removeEventListener('categoryChange', handleCategoryChange);
+    }, []);
+
+    const handleCategorySelect = (id: string) => {
+        setActiveCategoryId(id);
+        window.dispatchEvent(new CustomEvent('categoryChange', { detail: id }));
+    };
 
     useGSAP(() => {
         let mm = gsap.matchMedia();
@@ -65,7 +88,7 @@ export function Navbar() {
         <header className="absolute md:fixed top-0 left-0 w-full z-50 flex justify-center pointer-events-none">
             <div
                 ref={navContainerRef}
-                className="w-full pointer-events-auto flex flex-col transition-colors duration-300"
+                className="w-full pointer-events-auto flex flex-col transition-colors duration-300 overflow-hidden"
             >
                 <div className="flex h-20 items-center justify-between px-6 md:px-10">
                     <div className="flex items-center gap-2">
@@ -102,6 +125,36 @@ export function Navbar() {
                         {isMobileMenuOpen ? <X size={24} className="text-brand-text" /> : <Menu size={24} />}
                     </button>
                 </div>
+
+                {/* Integrated Desktop Sub-Nav Tray (only on Signature Tours) */}
+                {isSignatureTours && (
+                    <div className="hidden md:flex w-full border-t border-brand-text/5 transition-all duration-300">
+                        <div className="flex w-full overflow-x-auto no-scrollbar py-3 px-6 gap-6 lg:gap-10 items-center justify-start lg:justify-center">
+                            {CATEGORIES.map((cat) => (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => handleCategorySelect(cat.id)}
+                                    className="relative whitespace-nowrap group focus:outline-none flex flex-col items-center py-2"
+                                >
+                                    <span className={cn(
+                                        "text-xs uppercase tracking-[0.15em] transition-colors duration-300 font-medium",
+                                        activeCategoryId === cat.id
+                                            ? "text-brand-blue"
+                                            : "text-brand-text/50 group-hover:text-brand-text/80"
+                                    )}>
+                                        {cat.label}
+                                    </span>
+
+                                    {/* Animated Active Indicator */}
+                                    <span className={cn(
+                                        "absolute -bottom-1 h-[2px] bg-brand-accent transition-all duration-500 ease-out",
+                                        activeCategoryId === cat.id ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-1/2 group-hover:opacity-50"
+                                    )} />
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <div
                     className={cn(
