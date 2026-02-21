@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 import { Container } from "@/components/ui/container";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { WhatsAppCTA } from "@/components/ui/whatsapp-cta";
@@ -9,14 +11,38 @@ import { OperationalExcellence } from "@/components/about/operational-excellence
 import { CorporateMarquee } from "@/components/about/corporate-marquee";
 
 export default function AboutPage() {
+    const underlineRef = useRef<HTMLSpanElement>(null);
+
+    useEffect(() => {
+        // FIX #1: Only animate the underline — hero text must NOT start at opacity:0
+        // (above-fold elements should always be visible on load)
+        if (underlineRef.current) {
+            gsap.from(underlineRef.current, {
+                scaleX: 0,
+                transformOrigin: "left center",
+                duration: 0.9,
+                ease: "power3.out",
+                delay: 0.5,
+            });
+        }
+    }, []);
+
     return (
         <main className="w-full bg-brand-bg relative pb-16">
 
-            {/* Minimalist, Authority Hero */}
+            {/* Authority Hero — text is always visible, only underline animates */}
             <SectionWrapper spacing="hero" background="alt" className="pt-40 pb-24 border-b border-brand-text/5">
-                <Container className="max-w-4xl max-auto text-center flex flex-col items-center">
+                <Container className="max-w-4xl mx-auto text-center flex flex-col items-center">
                     <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-brand-text mb-6">
-                        More Than a Travel Agency.
+                        More Than a Travel{" "}
+                        <span className="relative inline-block">
+                            Agency.
+                            <span
+                                ref={underlineRef}
+                                className="absolute -bottom-2 left-0 right-0 h-[4px] rounded-full bg-brand-accent block"
+                                style={{ transformOrigin: "left center" }}
+                            />
+                        </span>
                     </h1>
                     <p className="text-lg md:text-xl font-sans text-brand-text-muted max-w-2xl font-light leading-relaxed mb-6">
                         We are an operational powerhouse dedicated to flawless logistics, premium capability, and unwavering crisis management.
@@ -24,13 +50,13 @@ export default function AboutPage() {
                 </Container>
             </SectionWrapper>
 
-            {/* Assembled Trust & Authority Blocks */}
+            {/* Trust & Authority Blocks */}
             <FounderProfile />
             <CrisisTimeline />
             <OperationalExcellence />
             <CorporateMarquee />
 
-            {/* Conversational Footer specific to the About Page */}
+            {/* About-specific CTA Footer */}
             <SectionWrapper background="default" spacing="default" className="border-t border-brand-text/5 mt-16 pb-24">
                 <Container className="max-w-4xl mx-auto text-center">
                     <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-brand-text mb-8 leading-tight">

@@ -1,41 +1,95 @@
 "use client";
 
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@/components/ui/container";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { ShieldCheck, FileCheck, Landmark, Car, Hotel } from "lucide-react";
 
+const LOGISTICS_ITEMS = [
+    { icon: FileCheck, label: "Embassy Visa processing & mock audits" },
+    { icon: Landmark, label: "Pre-departure Forex card loading" },
+    { icon: Car, label: "VIP Airport Transfers & internal routing" },
+    { icon: Hotel, label: "4-Star & Premium Boutique accommodations" },
+    { icon: ShieldCheck, label: "24/7 dedicated crisis command line" },
+];
+
 export function TourLogistics() {
-    const items = [
-        { icon: <FileCheck className="w-8 h-8" />, label: "Embassy Visa processing & mock audits" },
-        { icon: <Landmark className="w-8 h-8" />, label: "Pre-departure Forex card loading" },
-        { icon: <Car className="w-8 h-8" />, label: "VIP Airport Transfers & internal routing" },
-        { icon: <Hotel className="w-8 h-8" />, label: "4-Star & Premium Boutique accomodations" },
-        { icon: <ShieldCheck className="w-8 h-8" />, label: "24/7 dedicated crisis command line" },
-    ];
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        const ctx = gsap.context(() => {
+            gsap.from(".logistics-card", {
+                opacity: 0,
+                y: 30,
+                duration: 0.9,
+                ease: "power3.out",
+                stagger: 0.12,
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top bottom",
+                    once: true,
+                },
+            });
+            gsap.from(".logistics-heading", {
+                opacity: 0,
+                y: 25,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top bottom",
+                    once: true,
+                },
+            });
+
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <SectionWrapper background="dark" className="py-24 md:py-32 border-y border-white/10">
-            <Container>
-                <div className="max-w-4xl mx-auto text-center">
-                    <span className="text-brand-accent text-sm font-bold tracking-widest uppercase mb-4 block">
-                        The Operational Shield
-                    </span>
-                    <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-8">
-                        We handle the complexity. <br className="hidden md:block" /> You just pack.
-                    </h2>
-                    <p className="text-white/70 font-sans text-lg max-w-2xl mx-auto mb-16 font-light">
-                        Every single logistical friction point of this journey is intercepted and managed by our in-house team before you even depart.
-                    </p>
+        <SectionWrapper background="dark" className="py-24 md:py-32 relative overflow-hidden border-y border-white/10">
+            {/* Ambient glow orbs */}
+            <div className="absolute -left-40 top-20 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -right-40 bottom-20 w-[500px] h-[500px] bg-brand-accent/3 rounded-full blur-3xl pointer-events-none" />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                        {items.map((item, idx) => (
-                            <div key={idx} className="bg-white/5 border border-white/10 p-6 rounded-[1.5rem] flex flex-col items-center text-center gap-4 hover:bg-white/10 transition-colors">
-                                <div className="text-brand-accent p-3 bg-brand-accent/10 rounded-full">
-                                    {item.icon}
+            <Container ref={sectionRef} className="relative z-10">
+                <div className="max-w-5xl mx-auto">
+                    <div className="logistics-heading text-center mb-20">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2 mb-8">
+                            <span className="h-1.5 w-1.5 rounded-full bg-brand-accent animate-pulse" />
+                            <span className="text-xs font-semibold text-white/60 tracking-widest uppercase">
+                                The Operational Shield
+                            </span>
+                        </div>
+                        <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                            We handle the complexity. <br className="hidden md:block" />
+                            <span className="text-brand-accent">You just pack.</span>
+                        </h2>
+                        <p className="text-white/60 font-sans text-lg max-w-2xl mx-auto font-light">
+                            Every logistical friction point is intercepted and managed by our in-house team before you even depart.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+                        {LOGISTICS_ITEMS.map((item, idx) => {
+                            const Icon = item.icon;
+                            return (
+                                <div
+                                    key={idx}
+                                    className="logistics-card group bg-white/5 border border-white/10 p-7 rounded-[1.5rem] flex flex-col items-center text-center gap-5 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                                >
+                                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-brand-accent/15 border border-brand-accent/20 text-brand-accent group-hover:scale-110 transition-transform duration-300">
+                                        <Icon className="w-6 h-6" />
+                                    </div>
+                                    <span className="text-sm text-white/80 font-medium leading-snug">
+                                        {item.label}
+                                    </span>
                                 </div>
-                                <span className="text-sm text-white/90 font-medium leading-snug">{item.label}</span>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </Container>

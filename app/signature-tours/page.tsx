@@ -15,6 +15,7 @@ import { HeartHandshake, ShieldCheck, Briefcase } from "lucide-react";
 const EXPERIENCES: SignatureExperienceData[] = [
     {
         id: "exp-1",
+        slug: "majestic-turkey",
         title: "Majestic Turkey",
         hookLine: "Hot air balloons over Cappadocia, with a dedicated chef providing specialized catering for the Jain and Swaminarayan communities.",
         sensoryCues: ["Private Chef", "Cave Hotel", "Bosphorus Cruise", "Jain/Swaminarayan Catering"],
@@ -25,6 +26,7 @@ const EXPERIENCES: SignatureExperienceData[] = [
     },
     {
         id: "exp-2",
+        slug: "maldives-escapes",
         title: "Maldives Escapes",
         hookLine: "Your overwater villa awaits. We negotiate the upgrades you can't get online.",
         sensoryCues: ["Seaplane Transfer", "Private Pool", "Spa Credit", "Honeymoon Perks"],
@@ -35,6 +37,7 @@ const EXPERIENCES: SignatureExperienceData[] = [
     },
     {
         id: "exp-3",
+        slug: "corporate-bali",
         title: "Corporate Bali",
         hookLine: "Moving 50 executives feels like moving two. Seamless logistics, powerful retreats.",
         sensoryCues: ["Charter Flights", "Conference Villa", "Team Building", "Gala Dinner"],
@@ -45,6 +48,7 @@ const EXPERIENCES: SignatureExperienceData[] = [
     },
     {
         id: "exp-4",
+        slug: "sri-lanka-heritage",
         title: "Sri Lanka Heritage",
         hookLine: "Tea plantations, private train carriages, and boutique colonial stays for the whole family.",
         sensoryCues: ["Private Chauffeur", "Wildlife Safari", "Cooking Class", "Family Suites"],
@@ -55,6 +59,7 @@ const EXPERIENCES: SignatureExperienceData[] = [
     },
     {
         id: "exp-5",
+        slug: "sri-lanka-romance",
         title: "Sri Lanka Romance",
         hookLine: "Secluded beachfront villas and private rainforest treks. The ultimate romantic escape.",
         sensoryCues: ["Private Pool", "Spa Credit", "Candlelit Dinners", "Rainforest Trek"],
@@ -90,6 +95,8 @@ export default function SignatureToursPage() {
         : EXPERIENCES.filter(exp => exp.category === activeCategory);
 
     // GSAP Grid Stagger Animation
+    // FIX #6: Changed batch start threshold from default to "top 90%" so cards
+    // animate in as soon as they are near the viewport (prevents invisible cards)
     useEffect(() => {
         if (!gridRef.current) return;
 
@@ -98,6 +105,7 @@ export default function SignatureToursPage() {
             gsap.set(cards, { opacity: 0, y: 50 });
 
             ScrollTrigger.batch(cards, {
+                start: "top 90%",
                 onEnter: (elements) => {
                     gsap.to(elements, {
                         opacity: 1,
@@ -105,17 +113,19 @@ export default function SignatureToursPage() {
                         duration: 1.2,
                         stagger: 0.15,
                         ease: "power3.out",
-                        overwrite: "auto" // Pre-empts conflicts to ensure smooth updates
+                        overwrite: "auto",
                     });
                 },
-                once: true // Ensure it only animates in once
+                once: true,
             });
         }, gridRef);
 
         return () => ctx.revert();
-    }, [filteredExperiences]); // Re-run when filter changes
+    }, [filteredExperiences]);
 
     // GSAP Trust Blocks Animation
+    // FIX #4: Changed start from "top 85%" to "top bottom" so blocks animate in
+    // as soon as they enter the viewport — prevents permanent opacity:0 on short screens
     useEffect(() => {
         if (!trustBlocksRef.current) return;
 
@@ -131,7 +141,8 @@ export default function SignatureToursPage() {
                     ease: "power3.out",
                     scrollTrigger: {
                         trigger: trustBlocksRef.current,
-                        start: "top 85%",
+                        start: "top bottom",
+                        once: true,
                     }
                 }
             );
