@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-interface HeadingBlockProps extends React.HTMLAttributes<HTMLDivElement> {
+interface HeadingBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
     title: string | React.ReactNode;
     subtitle?: string | React.ReactNode;
     alignment?: "left" | "center" | "right";
