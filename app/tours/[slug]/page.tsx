@@ -167,7 +167,7 @@ const TOURS_DB: Record<string, any> = {
                 dayLabel: "Day 5-7 • The Deep Reset",
                 title: "Riviera Relaxation",
                 description: "We transition you to the turquoise coast. Board a traditional Gulet for a private Mediterranean sail. The pace slows entirely—focusing on coastal gastronomy, ancient ruins at your own speed, and pure luxury relaxation.",
-                image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2940&auto=format&fit=crop"
+                image: "https://images.unsplash.com/photo-1672593657366-8219c888c243?auto=format&fit=crop&q=80&w=1920"
             }
         ],
 

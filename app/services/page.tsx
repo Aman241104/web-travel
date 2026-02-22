@@ -33,73 +33,73 @@ export default function ServicesPage() {
 
                         <CapabilityBlock
                             index={1}
-                            title="International Logistics Engineering"
+                            title="All-in-One Booking"
                             icon={<Globe size={32} strokeWidth={1.5} />}
-                            problem="Fragmented bookings across OTAs lead to missed connections, stranded transfers, and immense cognitive load."
-                            solution="Chronologically engineered planning. We synchronize every flight, bespoke stay, and ground transfer into a single, flawless timeline."
-                            reassurance="End-to-end synchronization for zero-friction transit."
+                            problem="Booking flights, hotels, and transfers separately is stressful and leads to mistakes."
+                            solution="We manage everything for you. Every flight, stay, and transfer is synchronized into one perfect timeline."
+                            reassurance="Complete synchronization for a stress-free trip."
                             ctaIntent="general"
-                            ctaMessage="Hi Heena, I need complex end-to-end logistics handled for my upcoming trip."
+                            ctaMessage="Hi Heena, I need help managing my end-to-end travel bookings."
                             className="md:col-span-2 lg:col-span-2"
                         />
 
                         <CapabilityBlock
                             index={2}
-                            title="Visa & Bureaucracy Shield"
+                            title="Visa Assistance"
                             icon={<FileCheck size={32} strokeWidth={1.5} />}
-                            problem="International travel is increasingly stalled by complex visa requirements, strict paperwork, and high rejection fears."
-                            solution="An internal team dedicated exclusively to navigating embassy bureaucracy, securing appointments, and organizing documentation."
-                            proofSignal="High success rates for complex Schengen and US visas."
+                            problem="Visas are complicated, time-consuming, and the fear of rejection is real."
+                            solution="Our dedicated team handles the paperwork, secures embassy appointments, and guides you through the entire process."
+                            proofSignal="High success rates for Schengen and US visas."
                             ctaIntent="visa-inquiry"
-                            ctaMessage="Hello! I have a quick question regarding Schengen/International visa processes."
+                            ctaMessage="Hello! I have a question regarding my visa application process."
                             className="lg:col-span-1"
                         />
 
                         <CapabilityBlock
                             index={3}
-                            title="Global Forex Solutions"
+                            title="Travel Cash & Forex"
                             icon={<Landmark size={32} strokeWidth={1.5} />}
-                            problem="Travelers constantly bleed money on hidden card fees, terrible airport exchange rates, and unexpected locks on their accounts."
-                            solution="Turnkey financial framing pre-departure. We secure the best operational rates and load forex cards so you land functionally independent."
-                            reassurance="Transparent financial management before you board."
+                            problem="Bad exchange rates and hidden bank fees at the airport can cost you a lot."
+                            solution="We secure the best rates and load your forex cards before you leave, so you're ready the moment you land."
+                            reassurance="No hidden fees. Best rates. Zero stress."
                             ctaIntent="general"
-                            ctaMessage="Hi team, I need forex guidance for my upcoming international travel."
+                            ctaMessage="Hi team, I need help with forex for my upcoming trip."
                             className="lg:col-span-1"
                         />
 
                         <CapabilityBlock
                             index={4}
-                            title="Corporate & Large Group Movement"
+                            title="Group & Corporate Travel"
                             icon={<Briefcase size={32} strokeWidth={1.5} />}
-                            problem="Moving 50+ people internationally requires military-grade logistics that standard travel agencies cannot scale to handle."
-                            solution="Strategic charter coordination, synchronized mass ticketing, precise rally points, and dedicated remote operational management."
-                            proofSignal="Managed 100-member complex domestic tour without an on-site manager."
+                            problem="Moving large groups across borders is a logistical nightmare for most agencies."
+                            solution="From company retreats to large families, we handle mass ticketing, private charters, and on-ground coordination."
+                            proofSignal="Successfully managed 100+ member group trips with zero hiccups."
                             ctaIntent="corporate"
-                            ctaMessage="Hello, I'm inquiring on behalf of my company regarding corporate group travel and mass logistics."
+                            ctaMessage="Hello, I'm inquiring regarding group/corporate travel logistics."
                             className="md:col-span-1 lg:col-span-2"
                         />
 
                         <CapabilityBlock
                             index={5}
-                            title="Kitchen Caravan Curations"
+                            title="Special Dietary Tours"
                             icon={<HeartHandshake size={32} strokeWidth={1.5} />}
-                            problem="Strict dietary practices often mean compromising on the absolute quality or location of luxury international trips."
-                            solution="We bring the kitchen to the world. A mobile culinary operation featuring dedicated chefs ensuring exact dietary adherence (Jain/Swaminarayan)."
-                            reassurance="Never compromise your beliefs or comfort abroad."
+                            problem="Finding authentic Jain or Swaminarayan food shouldn't mean staying home or eating poorly."
+                            solution="We bring our own kitchen and chefs on tour, ensuring you get the exact food you need, anywhere in the world."
+                            reassurance="Pure vegetarian and dietary-restricted meals, guaranteed."
                             ctaIntent="kitchen-caravan"
-                            ctaMessage="Hi team, I'm interested in a Kitchen Caravan tour with specific dietary requirements for our group."
+                            ctaMessage="Hi, I'm interested in a tour with Jain/Swaminarayan food requirements."
                             className="md:col-span-2 lg:col-span-2 bg-brand-blue-light/30 border-brand-accent/20"
                         />
 
                         <CapabilityBlock
                             index={6}
-                            title="24/7 Crisis Command Support"
+                            title="24/7 Support & Help"
                             icon={<ShieldAlert size={32} strokeWidth={1.5} />}
-                            problem="When an airline strikes mid-trip, an automated booking platform leaves you entirely abandoned in a foreign country."
-                            solution="We become your ultimate operational safety net. From re-routing entire groups to managing medical emergencies, we intercept the crisis."
-                            proofSignal="Re-routed 70 cancelled passengers to 3 new flights inside 7 hours."
+                            problem="If a flight gets cancelled at midnight, you don't want to talk to a robot."
+                            solution="We are your humans on the ground and on the phone. We handle the cancellations, re-bookings, and emergencies for you."
+                            proofSignal="Real human support, anytime you need it."
                             ctaIntent="general"
-                            ctaMessage="Hi Heena, I need an expert planner who handles logistics and unexpected crises. Can we chat?"
+                            ctaMessage="Hi, I need an expert travel team that is available 24/7 if things go wrong."
                             className="lg:col-span-1"
                         />
 

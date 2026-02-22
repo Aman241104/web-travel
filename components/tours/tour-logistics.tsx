@@ -6,6 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@/components/ui/container";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { ShieldCheck, FileCheck, Landmark, Car, Hotel } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const LOGISTICS_ITEMS = [
     { icon: FileCheck, label: "Embassy Visa processing & mock audits" },
@@ -18,39 +21,42 @@ const LOGISTICS_ITEMS = [
 export function TourLogistics() {
     const sectionRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-        const ctx = gsap.context(() => {
-            gsap.from(".logistics-card", {
-                opacity: 0,
-                y: 30,
-                duration: 0.9,
-                ease: "power3.out",
-                stagger: 0.12,
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top bottom",
-                    once: true,
-                },
-            });
-            gsap.from(".logistics-heading", {
-                opacity: 0,
-                y: 25,
-                duration: 1,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top bottom",
-                    once: true,
-                },
-            });
+    useGSAP(() => {
+        console.log("TourLogistics GSAP animation triggered");
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 80%",
+                toggleActions: "play none none none",
+                once: true,
+            }
+        });
 
-        }, sectionRef);
-        return () => ctx.revert();
-    }, []);
+        tl.from(".logistics-heading", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            ease: "power2.out",
+        })
+            .fromTo(".logistics-card",
+                {
+                    opacity: 0,
+                    y: 20,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    ease: "power2.out",
+                    stagger: 0.08,
+                },
+                "-=0.4"
+            );
+
+    }, { scope: sectionRef });
 
     return (
-        <SectionWrapper background="dark" className="py-24 md:py-32 relative overflow-hidden border-y border-white/10">
+        <SectionWrapper background="dark" className="py-20 md:py-28 relative overflow-hidden border-y border-white/10">
             {/* Ambient glow orbs */}
             <div className="absolute -left-40 top-20 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -right-40 bottom-20 w-[500px] h-[500px] bg-brand-accent/3 rounded-full blur-3xl pointer-events-none" />

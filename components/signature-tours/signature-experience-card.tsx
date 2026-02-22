@@ -89,10 +89,16 @@ export function SignatureExperienceCard({ data }: Props) {
 
                             {/* Single action button — stops Link navigation so WA opens instead */}
                             <WhatsAppCTA
+                                intentCategory="general"
                                 variant="premium"
                                 message={`Hi Heena! I am interested in the ${data.title} package. Can we discuss?`}
                                 className="group/btn bg-white text-brand-blue hover:bg-brand-accent hover:text-white border-0 py-4 px-7 shadow-2xl backdrop-blur-none text-sm shrink-0"
-                                onClick={(e: React.MouseEvent) => e.preventDefault()}
+                                onClick={(e: React.MouseEvent) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    const encodedMessage = encodeURIComponent(`Hi Heena! I am interested in the ${data.title} package. Can we discuss?`);
+                                    window.open(`https://wa.me/919000000000?text=${encodedMessage}`, '_blank');
+                                }}
                             >
                                 <span className="mr-2 font-semibold">Discuss this trip</span>
                                 <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />

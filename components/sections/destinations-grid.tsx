@@ -80,7 +80,7 @@ export function DestinationsGrid() {
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
                     <HeadingBlock
                         title="Curated Signatures"
-                        subtitle="Our most sought-after experiences. Hand-picked stays, private transfers, and itineraries designed for unparalleled comfort."
+                        subtitle="Our most popular travel experiences. Hand-picked stays, private transfers, and itineraries designed for your comfort."
                         className="flex-1"
                     />
                     <WhatsAppCTA

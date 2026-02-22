@@ -1,10 +1,13 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Container } from "@/components/ui/container";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface CountUpMetric {
     targetVal: number;
@@ -33,13 +36,7 @@ export function OperationalExcellence() {
     const counter0Ref = useRef<HTMLSpanElement>(null);
     const counter1Ref = useRef<HTMLSpanElement>(null);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
-        // FIX #2: Removed gsap.context wrapper from CountUp — each counter gets its own
-        // independent ScrollTrigger. No nested delay conflicts.
-        const refs = [counter0Ref, counter1Ref];
-
+    useGSAP(() => {
         // Panel fade-in
         gsap.from(".excellence-panel", {
             opacity: 0,
@@ -48,35 +45,34 @@ export function OperationalExcellence() {
             ease: "power3.out",
             scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top bottom",
+                start: "top 85%",
+                toggleActions: "play none none none",
                 once: true,
             },
         });
 
-        // CountUp for each metric — independent ScrollTriggers, no shared context
+        // CountUp for each metric
         METRICS.forEach((metric, i) => {
-            const el = refs[i].current;
+            const el = i === 0 ? counter0Ref.current : counter1Ref.current;
             if (!el) return;
+
             const obj = { val: 0 };
             gsap.to(obj, {
                 val: metric.targetVal,
                 duration: metric.targetVal === 100 ? 2.5 : 1.8,
                 ease: "power2.out",
-                onUpdate() {
-                    el.textContent = Math.round(obj.val) + metric.suffix;
-                },
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: "top bottom",
+                    start: "top 85%",
+                    toggleActions: "play none none none",
                     once: true,
                 },
+                onUpdate() {
+                    el.textContent = Math.round(obj.val) + metric.suffix;
+                }
             });
         });
-
-        return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
-    }, []);
+    }, { scope: sectionRef });
 
     return (
         <SectionWrapper background="dark" spacing="default" className="relative overflow-hidden">

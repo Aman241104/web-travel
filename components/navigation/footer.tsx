@@ -25,7 +25,7 @@ export function Footer() {
                         <li><Link href="/signature-tours?region=maldives" className="hover:text-white transition-colors">The Maldives Retreat</Link></li>
                         <li><Link href="/signature-tours?region=turkey" className="hover:text-white transition-colors">Turkish Elegance</Link></li>
                         <li><Link href="/signature-tours?region=sri-lanka" className="hover:text-white transition-colors">Sri Lankan Escapes</Link></li>
-                        <li><Link href="/services#kitchen-caravan" className="hover:text-white transition-colors">Kitchen Caravan Services</Link></li>
+                        <li><Link href="/services" className="hover:text-white transition-colors">Special Dietary Tours</Link></li>
                     </ul>
                 </div>
 
@@ -33,7 +33,7 @@ export function Footer() {
                     <h3 className="font-semibold text-lg tracking-wide">Company</h3>
                     <ul className="flex flex-col gap-3 text-white/70 text-sm">
                         <li><Link href="/about" className="hover:text-white transition-colors">Our Story</Link></li>
-                        <li><Link href="/services" className="hover:text-white transition-colors">Capabilities</Link></li>
+                        <li><Link href="/services" className="hover:text-white transition-colors">Our Services</Link></li>
                         <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
                         <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
                     </ul>

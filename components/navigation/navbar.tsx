@@ -12,8 +12,8 @@ import Link from "next/link";
 const CATEGORIES = [
     { id: "all", label: "All Experiences" },
     { id: "honeymoon", label: "Honeymoon & Couples" },
-    { id: "corporate", label: "Corporate Retreats" },
-    { id: "kitchen-caravan", label: "Kitchen Caravan Tours" },
+    { id: "corporate", label: "Corporate Travel" },
+    { id: "kitchen-caravan", label: "Special Dietary Tours" },
     { id: "family", label: "Family Holidays" },
 ];
 

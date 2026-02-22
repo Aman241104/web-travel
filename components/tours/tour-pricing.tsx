@@ -30,7 +30,9 @@ export function TourPricing({ destination, startingPrice, pricingNote }: TourPri
     return (
         <SectionWrapper background="default" className="py-24 md:py-32">
             <Container>
-                <div className="max-w-5xl mx-auto bg-white rounded-[2rem] border border-brand-text/10 shadow-2xl overflow-hidden flex flex-col md:flex-row">
+                <div className="max-w-5xl mx-auto bg-white rounded-[2rem] border border-brand-text/5 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.12)] overflow-hidden flex flex-col md:flex-row relative group/card">
+                    {/* Subtle aesthetic gradient border overlay */}
+                    <div className="absolute inset-0 rounded-[2rem] border border-brand-text/5 pointer-events-none z-20" />
 
                     {/* Left: Pricing Logic */}
                     <div className="w-full md:w-[45%] bg-brand-bg-alt p-10 md:p-16 flex flex-col justify-center border-b md:border-b-0 md:border-r border-brand-text/10">

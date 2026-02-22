@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { Container } from "@/components/ui/container";
 
 export type ExperienceBeat = {
@@ -37,7 +38,7 @@ export function TourNarrative({ beats }: TourNarrativeProps) {
                     </p>
                 </div>
 
-                <div className="max-w-6xl mx-auto space-y-40">
+                <div className="max-w-6xl mx-auto space-y-32">
                     {beats.map((beat, idx) => (
                         <NarrativeBeat key={idx} beat={beat} index={idx} />
                     ))}
@@ -53,32 +54,44 @@ function NarrativeBeat({ beat, index }: { beat: ExperienceBeat; index: number })
     const textRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useGSAP(() => {
         gsap.registerPlugin(ScrollTrigger);
-        const ctx = gsap.context(() => {
-            gsap.from(imgRef.current, {
-                opacity: 0,
-                x: isEven ? -50 : 50,
-                duration: 1.2,
-                ease: "power3.out",
-                scrollTrigger: { trigger: containerRef.current, start: "top 82%", once: true },
-            });
-            gsap.from(textRef.current, {
-                opacity: 0,
-                x: isEven ? 50 : -50,
-                duration: 1.2,
-                delay: 0.15,
-                ease: "power3.out",
-                scrollTrigger: { trigger: containerRef.current, start: "top 82%", once: true },
-            });
-        }, containerRef);
-        return () => ctx.revert();
-    }, [isEven]);
+
+        // Image animation
+        gsap.from(imgRef.current, {
+            opacity: 0,
+            x: isEven ? -60 : 60,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        });
+
+        // Text animation
+        gsap.from(textRef.current, {
+            opacity: 0,
+            x: isEven ? 60 : -60,
+            duration: 1.2,
+            delay: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+                once: true,
+            },
+        });
+    }, { scope: containerRef, dependencies: [isEven] });
 
     return (
         <div
             ref={containerRef}
-            className={`flex flex-col gap-12 lg:gap-20 ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} items-center`}
+            className={`flex flex-col gap-12 lg:gap-20 ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"
+                } items-center`}
         >
             {/* Image */}
             <div ref={imgRef} className="w-full lg:w-1/2">
